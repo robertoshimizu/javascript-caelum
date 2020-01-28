@@ -1,0 +1,135 @@
+<meta charset="utf-8" />
+<html>
+    <body>
+        <h1>Java: manipulação da DOM</h1>
+        <form id='form1' action="">
+        <label for="">
+            * Nome:
+            <br>
+            <input type="text" class="obrigatorio" data-msg="Nome é obrigatório!">
+        </label>
+        <label for="">
+            * E-mail:
+            <br>
+            <input type="text" class="obrigatorio" data-msg="E-mail é obrigatório!">
+        </label>
+        <label for="">
+            Telefone:
+            <br>
+            <input type="text">
+        </label>
+        <button>
+            Enviar
+        </button>
+        </form>
+
+    </body>
+</html>
+
+<script>
+
+    // 1) Guardar a referencia do formulario
+    const form1 = document.querySelector('#form1');
+    const divMsg = document.createElement('div');
+    divMsg.classList.add('msg-atencao');
+
+    // 2) Adicionar um evento 'Submit' ao formulario
+    form1.addEventListener('submit', function (event) {
+        event.preventDefault(); //bloqueia o recarregamento da página
+
+        const mensagensErro = [];
+        const camposObrigatorios = form1.querySelectorAll('.obrigatorio');
+        camposObrigatorios.forEach(campo =>{
+            if (campo.value.trim() === ''){
+                campo.classList.add('destacar');
+                campo.value = '';
+                mensagensErro.push(campo.dataset.msg);
+
+            }
+            else{
+                campo.classList.remove('destacar');
+            }
+        })
+        console.log(mensagensErro);
+        
+
+        // Se há mensagens de erro para serem exibidas
+        if (mensagensErro.length > 0){
+            divMsg.innerHTML = `
+            <b>Atenção</b><br>
+            ${mensagensErro.join('<br>')}
+            `;
+            divMsg.classList.replace('msg-sucesso','msg-atencao');
+        }
+        // caso contrario: Sucesso
+        else {
+            divMsg.textContent = 'Cadastro realizado com sucesso!';
+            divMsg.classList.replace('msg-atencao','msg-sucesso');
+        }
+
+        form1.prepend(divMsg); // adiciona a divMsg como primeiro-filho do formulario
+
+        /*
+        'beforebegin': antes do começo do elemento de referencia
+        'afterbegin': depois do começo do elemento de referencia
+        'beforeend': antes do fim do elemento de referencia
+        'afterend': depois do fim do elemento de referencia
+        
+        */
+    });
+
+
+</script>
+
+
+<style>
+        .msg {
+            padding: 15px 25px;
+            border-radius: 5px;
+            background: #f2f2f2;
+            border: 1px solid #ddd;
+        }
+        .msg-error, .destacar {
+            border-color: #db2323;
+            color: #db2323;
+            background: #b68686;
+        }
+        .msg-atencao, .destacar {
+            padding: 15px 25px;
+            border-radius: 5px;
+            background: #f2f2f2;
+            border: 1px transparent #ddd;
+            color: #db2323;
+        }
+        .msg-sucesso {
+            border-color: #30cf6c;
+            color: #30cf6c;
+            background: #e3ffee;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        form {
+            width: 400px;
+            margin-top: 20px;
+        }
+        body {
+            padding: 60px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        input {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 12px;
+            box-sizing: border-box;
+        }
+        button {
+            border-radius: 5px;
+            border: none;
+            background: green;
+            color: #fff;
+            padding: 15px 35px;
+        }
+    
+    </style>

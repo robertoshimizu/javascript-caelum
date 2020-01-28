@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Javascript: var, let e const</h1>
+</body>
+</html>
+<script>
+    // Comentário de uma unica linha
+    /* Comentario de multiplas linhas */
+
+    'use strict';
+
+    /* 
+        'use strict' proíbe:
+        1) o comando with;
+        2) omissão das palavras-chave var/let/const;
+        3) funções com parametros dulpicados;
+        4) mudar o comportamento da palavra-chave (this)
+    
+    */
+
+    // variáveis com "var" são sempre globais ou locais (quando estão em uma função)
+    var a =999;
+    if (true){
+        var b = a;
+    }
+    console.log('Valor da variável b: ', b)
+
+    function teste(){
+        var c = 'Jhonatan';
+        console.log(c);
+    }
+    teste();
+    // console.log(c);
+
+    // Variaveis com "let"
+
+    let c = 888;
+    if(true){
+        let d = c;
+        console.log('D aqui é acessível: ',d);
+    }
+    //console.log(d) // ReferenceError: d não existe fora do if
+
+
+    {
+        // escopo vazio
+        let dadosApi = ['Jhonatan','Adriana','Marcelo'];
+        console.log('Dados da Api', dadosApi);
+    }
+    // console.log('Dados da Api', dadosApi); //
+
+    // looping com var
+    for (var e=1;e<=10;e++){
+        console.log('e: ', e);
+    }
+    console.log('e: ', e);
+
+    // looping com let
+    for (let f=1;f<=10;f++){
+        console.log('f: ', f);
+    }
+    //console.log('f: ', f);
+
+    // Constantes
+    const x = 10;
+    // x = 2; // nao pode reatribuir
+
+    const lista = ['Gato', 'Cachorro', 'Vaca'];
+    lista.push('Cavalo');
+    console.log(lista);
+    lista.shift(); // remove o primeiro item da lista
+    lista.splice(1,1); //remove um item da lista numa posicao especifica
+    lista.splice(3,0,"Sapo"); //Adiciona o 'sapo' na posicao 3 do array
+    console.log('Lista Modificada', lista);
+    // lista = []; // Type Error porque reatribuiu a variavel
+
+    // Objetos em Javascript, neste caso vamos construir um Objeto Literal
+    const pessoa = {
+        // propriedades do objeto
+        nome: 'Jhonatan',
+        sobrenome: 'Jacinto',
+        idade: 28,
+
+        // metodo do objeto
+        dizerOla: function(){
+            console.log('Olá Pessoas !!');
+        }
+    }
+    console.log('Nome da Pessoa: ',pessoa.nome);
+    console.log('Idade da Pessoa: ',pessoa.idade);
+    pessoa.dizerOla();
+    console.log(pessoa);
+    pessoa.nome="Karla";
+    pessoa.cidade="Barueri";
+    console.log(pessoa);
+    //pessoa = {}; // TypeError
+
+    // escopo vazio
+
+    {
+        let foo = function(a,b){
+            console.log(a + b);
+        }
+        foo(5,10);
+
+        function foo2(a,b){
+            console.log(a + b);
+        }
+        // exportar uma funcao pro escopo global
+        window.foo = foo;
+        window.foo2 = foo2;
+    }
+
+    foo(5,10);
+    foo2(5,10);
+
+
+</script>

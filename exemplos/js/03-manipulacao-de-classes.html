@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Javascript: Manipuilacao de Classes</h1>
+
+    <!-- button*4#btn$>{botao $} -->
+    <button id="btn1">
+        <btn1>botao 1</btn1>
+    </button>
+    <button id="btn2" class='red'>
+        <btn2>botao 2</btn2>
+    </button>
+    <button id="btn3">
+        <btn3>botao 3</btn3>
+    </button>
+    <button id="btn4" class='red'>
+        <btn4>botao 4</btn4>
+    </button>
+</body>
+</html>
+
+<style>
+    button{
+        background: #ddd;
+        border: 1px solid #ddd;
+        padding: 8px 15px;        
+    }
+    button.red{
+        background: #fff0f0;
+        border-color: #db2323;
+    }
+
+</style>
+
+<script>
+    // Guardar as referencias dos objetos da interface
+    const btn1 = document.querySelector('#btn1');
+    const btn2 = document.querySelector('#btn2');
+    const btn3 = document.querySelector('#btn3');
+    const btn4 = document.querySelector('#btn4');
+
+    console.log(this); //contexto global: window
+
+    btn1.onclick = function(){
+        console.log(this); //btn1
+        this.classList.add('red');
+    };
+
+    // btn2.onclick = function(){
+    //     console.log(this); //btn2
+    //     this.classList.remove('red');
+    // };
+
+    // btn2.onclick = ()=>{
+    //     this.classList.remove('red');
+    // }; 
+    // this nao funciona para arrow functions - pois em arrow functions
+    // this guarda o escopo maior
+    // neste caso informe o objeto: btn2.classList
+
+    btn2.onclick = function(){
+        console.log(this);
+        this.classList.remove('red');
+    };
+
+    btn3.onclick= ()=>btn3.classList.toggle('red');
+
+    btn4.onclick = ()=>{
+        if(btn4.classList.contains('red')===true){
+            alert('Obotao tem a classe RED !!!');
+        }
+        else{
+            alert('O botao não tem a classe RED !!!')
+        }
+        btn4.classList.toggle('red');
+    }
+
+</script>

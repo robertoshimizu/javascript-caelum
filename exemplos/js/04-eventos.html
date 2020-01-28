@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Javascript: Eventos</h1>
+    <button id="btn1">Click ou Barra de Espaço</button>
+    <button id="btn2">Click</button>
+    <button id="btn3">MouseEnter ou Barra de Espaço</button>
+    <button id="btn4">Shift</button>
+</body>
+</html>
+
+<script>
+    function digaClick(){
+        alert('Click !!!');
+    }
+
+    function digaMouseEnter(){
+        alert('Mouse está sobre o elemento!');
+    };
+
+    function digaShift(event){
+        console.log(event.key);
+        if (event.key === 'Shift'){
+        alert('Shift !!');
+        }
+    };
+
+    function digaBarradeEspaco(event){
+        console.log(event.code);
+        console.log(event.key);
+        if (event.key === ' '){
+            alert('Barra de Espaco !!');
+        }
+    };
+        
+
+    // Guardar as referencias dos botoes
+    const btn1 = document.querySelector('#btn1');
+    const btn2 = document.querySelector('#btn2');
+    const btn3 = document.querySelector('#btn3');
+    const btn4 = document.querySelector('#btn4');
+
+    btn1.addEventListener('click', digaClick);
+    btn1.addEventListener('keypress', digaBarradeEspaco);
+
+    btn2.addEventListener('click', digaClick);
+
+    btn3.addEventListener('keypress', digaBarradeEspaco);
+    btn3.addEventListener('mouseenter', digaMouseEnter);
+
+    btn4.addEventListener('keyup', digaShift);
+
+
+</script>
+
+<style>
+    button{
+            background: #ddd;
+            border: 1px solid #ddd;
+            padding: 8px 15px;        
+        }
+    button:focus{
+        box-shadow: 0 0 10px #db2323;
+    }
+
+
+</style>

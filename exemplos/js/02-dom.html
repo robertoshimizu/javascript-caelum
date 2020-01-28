@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Javascript: DOM</h1>
+    <p>Parágrafo 1</p>
+    <p class='red'>Parágrafo 2</p>
+    <p>Parágrafo 3</p>
+    <p>Parágrafo 4</p>
+    <p class='red'>Parágrafo 5</p>
+    <p>Parágrafo 6</p>
+    <p>Parágrafo 7</p>
+    <p class='red'>Parágrafo 8</p>
+    <p>Parágrafo 9</p>
+    <p id='p10'>Parágrafo 10</p>
+</body>
+</html>
+<style>
+    .red{
+        color:red;
+        font: 500;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    #p10{
+        color:blue;
+        font: bold;
+        font-family: cursive;
+    }
+
+</style>
+<script>
+
+    const p10 = document.querySelector('#p10');
+    p10.textContent='Modificado';
+    p10.style.fontStyle='italic';
+
+    // querySelectorAll(): seleciona e retorna o primeiro elemento que ele encontrar
+    // que atenda o seletor indicado
+    const pReds = document.querySelectorAll('p.red');
+    console.log(pReds);
+
+    for (let i=0;i<pReds.length;i++){
+        pReds[i].textContent="Modificado no 'for loop'";
+    };
+
+    // forEach(): funcao para percorres listas de dados
+    pReds.forEach(function(paragrafo){
+        paragrafo.textContent="Modificado no 'for Each'";
+    });
+
+    // ES6+ = Arrow functions
+    pReds.forEach((paragrafo) => {
+        paragrafo.textContent="Modificado com 'Arrow functions'"
+    });
+    pReds.forEach(paragrafo => {
+        paragrafo.textContent="Modificado com 'Arrow functions 2'"
+    });
+    pReds.forEach(paragrafo => paragrafo.textContent="Modificado com 'Arrow functions 3'");
+
+
+
+
+</script>

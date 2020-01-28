@@ -1,0 +1,129 @@
+<meta charset="utf-8" />
+<html>
+    <body>
+            <h1>Java: Navegação na DOM</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome:</th>
+                        <th>E-mail:</th>
+                        <th>Cidade:</th>
+                        <th colspan="2"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Adriana Fernandes</td>
+                        <td>adriana@gmail.com</td>
+                        <td>Barueri</td>
+                        <td><button class="editar">Editar</button></td>
+                        <td><button class="excluir">Excluir</button></td>
+                    </tr>
+                    <tr>
+                        <td>Mateus Ferreira</td>
+                        <td>mateus@uol.com.br</td>
+                        <td>Caracas</td>
+                        <td><button class="editar"> Editar</button></td>
+                        <td><button class="excluir">Excluir</button></td>
+                    </tr>
+                    <tr>
+                        <td>Paula Nigro</td>
+                        <td>paula@hotmail.com</td>
+                        <td>Osasco</td>
+                        <td><button class="editar">Editar</button></td>
+                        <td><button class="excluir">Excluir</button></td>
+                    </tr>
+                    <tr>
+                        <td>Gustavo Oliveira</td>
+                        <td>gustavo@outlook.com</td>
+                        <td>Curitiba</td>
+                        <td><button class="editar">Editar</button></td>
+                        <td><button class="excluir">Excluir</button></td>
+                    </tr>
+                </tbody>
+            </table>
+    </body>
+</html>
+
+<script>
+    const tabela = document.querySelector('table');
+    tabela.addEventListener('click',function(event){
+        //console.log(event.target.classList);
+        //console.log(event.currentTarget);
+
+        if (event.target.classList.contains('excluir') && confirm('Are you Sure')){
+            // entao foi o botao excluir que foi clicado
+            console.log('exluir')
+            // olhar ancestralidade e remover a <td> correspondente - olhar a estrutura. No caso é avô: button -> td -> tr
+            event.target.parentElement.parentElement.remove();
+        }
+        else if (event.target.classList.contains('editar')){
+            // entao foi o botao editar que foi clicado
+            console.log('editar')
+            const btnEditar = event.target;
+            let isEditavel = false;
+
+            if (btnEditar.textContent.trim() === 'Editar'){
+                btnEditar.textContent = 'Salvar Edição';
+                isEditavel = true;
+            }
+            else{
+                btnEditar.textContent = 'Editar';
+            }
+
+            let tdTio = btnEditar.parentElement.previousElementSibling;
+            while (tdTio !== null){
+                tdTio.classList.toggle('editavel');
+                tdTio.contentEditable = isEditavel;
+                tdTio = tdTio.previousElementSibling;
+            }
+            desabilitarCelulas(btnEditar.parentElement.parentElement);
+        }    
+        
+        function desabilitarCelulas(elementoTr)
+        {
+            const trs = document.querySelectorAll('tbody tr');
+            trs.forEach(tr=>{
+                if(tr !== elementoTr){
+                    tr.querySelector('.editar').textContent = 'Editar';
+                    tr.querySelectorAll('.editavel').forEach(td =>{
+                        td.classList.remove('editavel');
+                        td.contentEditable = false
+                    })
+                }
+            })
+
+        }
+
+    })
+
+
+</script>
+
+<style>
+    table {
+        width: 100%;
+        border: 1px solid #ddd;
+        border-collapse: collapse;
+    }
+    body {
+        padding: 60px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    th, td {
+        border-bottom: 2px solid #ddd;
+        border-right: 1px solid #ddd;
+        background: #eee;
+        text-align: left;
+        padding: 15px;
+    }
+    td {
+        background: #fff;
+        border-bottom-width: 1px;
+    }
+    td.editavel {
+        border-color: #ffA305;
+        color: #ffa305;
+        background: #fcf6eb;
+    }
+</style>
