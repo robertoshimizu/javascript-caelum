@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>jQuery: Manipuilacao de Classes</h1>
+
+    <!-- button*4#btn$>{botao $} -->
+    <button id="btn1">
+        <btn1>botao 1</btn1>
+    </button>
+    <button id="btn2" class='red'>
+        <btn2>botao 2</btn2>
+    </button>
+    <button id="btn3">
+        <btn3>botao 3</btn3>
+    </button>
+    <button id="btn4" class='red'>
+        <btn4>botao 4</btn4>
+    </button>
+</body>
+</html>
+
+<style>
+    button{
+        background: #ddd;
+        border: 1px solid #ddd;
+        padding: 8px 15px;        
+    }
+    button.red{
+        background: #fff0f0;
+        border-color: #db2323;
+    }
+
+</style>
+
+<script src="jquery.min.js"></script>
+
+<script>
+
+$('#btn1').click(()=>$('#btn1').addClass('red'));
+$('#btn2').click(()=>$('#btn2').removeClass('red'));
+
+$('#btn3').click(()=>$('#btn3').toggleClass('red'));
+
+$('#btn4').click(()=>{
+    if ($('#btn4').hasClass('red')){
+        alert('Sim, o botão tem a classe RED !!!')
+    }
+});
+
+
+
+</script>
