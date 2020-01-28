@@ -1,0 +1,98 @@
+<meta charset="utf-8" />
+<html>
+    <body>
+            <h1>Java: Navegação na DOM</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome:</th>
+                        <th>E-mail:</th>
+                        <th>Cidade:</th>
+                        <th colspan="2"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Adriana Fernandes</td>
+                        <td>adriana@gmail.com</td>
+                        <td>Barueri</td>
+                        <td><button class="editar">Editar</button></td>
+                        <td><button class="excluir">Excluir</button></td>
+                    </tr>
+                    <tr>
+                        <td>Mateus Ferreira</td>
+                        <td>mateus@uol.com.br</td>
+                        <td>Caracas</td>
+                        <td><button class="editar"> Editar</button></td>
+                        <td><button class="excluir">Excluir</button></td>
+                    </tr>
+                    <tr>
+                        <td>Paula Nigro</td>
+                        <td>paula@hotmail.com</td>
+                        <td>Osasco</td>
+                        <td><button class="editar">Editar</button></td>
+                        <td><button class="excluir">Excluir</button></td>
+                    </tr>
+                    <tr>
+                        <td>Gustavo Oliveira</td>
+                        <td>gustavo@outlook.com</td>
+                        <td>Curitiba</td>
+                        <td><button class="editar">Editar</button></td>
+                        <td><button class="excluir">Excluir</button></td>
+                    </tr>
+                </tbody>
+            </table>
+    </body>
+</html>
+<script src="jquery.min.js"></script>
+<script>
+   $('table').on('click','.excluir', function(){
+       //console.log(this);
+       if (confirm('Are you sure')){
+           // closest procura na ancestralidade
+           // find procura descendentes
+           $(this).closest('tr').remove();
+       }
+   });
+    $('table').on('click', '.editar', function(){
+        if ($(this).text().trim() === 'Editar'){
+            $(this).text('Salvar Edição')
+            $(this).parent().prevAll().addClass('editavel').prop('contenteditable', true);
+        }
+        else {
+            $(this).text('Editar');
+            $(this).parent().prevAll().removeClass('editavel').prop('contenteditable', false);
+        }
+
+        $(this).closest('tr').siblings().find('td.editavel').removeClass('editavel');
+        $(this).closest('tr').siblings().find('button.editar').text('Editar');
+    });
+</script>
+
+<style>
+    table {
+        width: 100%;
+        border: 1px solid #ddd;
+        border-collapse: collapse;
+    }
+    body {
+        padding: 60px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    th, td {
+        border-bottom: 2px solid #ddd;
+        border-right: 1px solid #ddd;
+        background: #eee;
+        text-align: left;
+        padding: 15px;
+    }
+    td {
+        background: #fff;
+        border-bottom-width: 1px;
+    }
+    td.editavel {
+        border-color: #ffA305;
+        color: #ffa305;
+        background: #fcf6eb;
+    }
+</style>
