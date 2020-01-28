@@ -1,0 +1,90 @@
+<meta charset="utf-8" />
+<html>
+    <body>
+        <h1>Java: Navegação na DOM</h1>
+        <div class="accordions">
+            <div class="accordion">
+                <h4>Accordion 1</h4>
+                <div class="conteudo">
+                    <div>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut magni numquam accusamus dignissimos explicabo sapiente sed harum quos fugiat quas, voluptatibus blanditiis et dolores commodi doloremque exercitationem? Dolor, veniam quidem.</div>
+                </div>
+            </div>
+            <div class="accordion">
+                <h4>Accordion 2</h4>
+                <div class="conteudo">
+                    <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum repudiandae impedit corrupti soluta quod temporibus blanditiis facilis accusamus sunt id dolor voluptas necessitatibus est sit praesentium, consectetur nulla ducimus rerum!</div>
+                </div>
+            </div>
+            <div class="accordion">
+                <h4>Accordion 3</h4>
+                <div class="conteudo">
+                    <div>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae sapiente ducimus cum porro itaque enim perspiciatis, odit deleniti qui, perferendis non maiores? Animi voluptate vitae pariatur tempora repellendus, sint iste?</div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+<script>
+
+const acordeoes = document.querySelector('.accordions');
+// ja começa com o primeiro elemento aberto
+acordeoes.firstElementChild.lastElementChild.classList.add('abrir');
+
+acordeoes.addEventListener('click', function(event){
+    if (event.target.tagName === 'H4'){
+        event.target.nextElementSibling.classList.toggle('abrir');
+        // metodos aneterior era dar um query selector de todas as classes accordion
+        // Mas pode usar dois metodos abaixo:
+        // object.children, que traz node de elemento, o que é melhor.
+        // console.log(acordeoes.children);
+        // object childNodes, note que este metodos traz qualquer node.
+        // console.log(acordeoes.childNodes);
+
+        // CHildren nao tem forEach for misterious reasons
+        // transforma em array e faz forEach
+        Array.from(acordeoes.children).forEach(acordeao => {
+            if (event.target.parentElement !== acordeao){
+                //console.log(acordeao);
+                acordeao.lastElementChild.classList.remove('abrir');
+            }
+            
+        });
+
+    }
+    
+})
+
+
+</script>
+
+<style>
+    body {
+        padding: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .accordions {
+        width: 400px;
+    }
+    .accordion {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 30px;
+    }
+    .accordion > h4 {
+        cursor: pointer;
+        background: #eee;
+        margin: 0;
+        padding: 10px 20px;
+        border-bottom: 1px solid #ccc;
+    }
+    .accordion > .conteudo {
+        display: none;
+    }
+    .accordion > .conteudo.abrir {
+        display: block;
+    }
+    .conteudo > div {
+        padding: 20px;
+    }
+</style>
