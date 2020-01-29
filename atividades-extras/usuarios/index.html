@@ -13,13 +13,63 @@
             <strong>Dados do Usuário</strong>
         </div>
         <div class="card-body">
-            Selecione um usuário para exibir seus dados aqui :)
+            
         </div>
     </div>
 </div>
 
 <script>
 
-    // insira a lógica aqui
+    const select = document.querySelector('select');
+    const divCard = document.querySelector('.card-body');
+
+    (async function(){
+        try {
+                const resposta = await fetch('https://jsonplaceholder.typicode.com/users');
+                const usuarios = await resposta.json();
+
+                usuarios.forEach(usuario =>{
+                    const option = document.createElement('option');
+                    option.value = usuario.id;
+                    option.textContent= usuario.name;
+                    select.append(option);
+                })
+
+                select.addEventListener('change',()=>{
+                    const dados = select.value;
+                    // console.log(dados);
+                    if (dados === ''){
+                        
+                        msg = "Selecione um usuário para exibir seus dados aqui :)"
+                        document.querySelector('.card-body').textContent = msg;
+                    }
+                    else {
+                        divCard.textContent = 'Carregando...';
+                        fetch(`https://jsonplaceholder.typicode.com/users/${dados}`)
+                        .then(respostaServidor => {
+                            return respostaServidor.json();
+                        })
+                        .then(usuario=>{
+                            // console.log(usuario);
+                            divCard.innerHTML=`
+                            <b>NOME: </b>${usuario.name}</br>
+                            <b>USERNAME: </b>${usuario.username}</br>
+                            <b>E-MAIL: </b>${usuario.email}</br>
+                            <b>CIDADE: </b>${usuario.address.city}</br>
+                            <b>SITE: </b>${usuario.website}</br>                            
+                            `;
+                        })
+                        .catch(erro => {
+                            alert("Deu pau!!!")
+                        });        
+                    };
+                });
+            }
+            catch(erro){
+                alert("Deu pau!!!");
+                console.error(erro);
+            } 
+    })();
+    
 
 </script>

@@ -13,6 +13,35 @@
 
 <script>
 
-    // Insira sua lógica aqui
+        const blog = document.querySelector('.btn');
+        const mural = document.querySelector('.posts-blog');
+        
+        blog.addEventListener('click', async function(){
+            try {
+                const resposta = await fetch('https://jsonplaceholder.typicode.com/posts');
+                const posts = await resposta.json();
+
+                // console.log(mural);
+
+                posts.forEach(post => {
+                    // console.log(post.title);
+                    let card = document.createElement('div');
+                    card.classList.add('card', 'mb-3','w-100');
+                    card.innerHTML = `
+                        <div class="card-header">
+                            ${post.title}
+                        </div>
+                        <div class="card-body">
+                            ${post.body}
+                        </div>
+                    `;
+                    mural.append(card)
+                });
+            }
+            catch(erro){
+                alert("Deu pau!!!");
+                console.error(erro);
+            }            
+        });
 
 </script>

@@ -46,10 +46,53 @@
         <!-- Exibir aqui a lista de comentários do POST -->
     </ul>
 </div>
-
 <script>
 
-    // Insira a lógica necessária aqui
+    const tbody = document.querySelector('tbody');
+    const ul = document.querySelector('.comentarios');
+
+    (async() => {
+        let url = 'https://jsonplaceholder.typicode.com/posts?_start=0&_limit=10';
+        const resposta = await fetch(url);
+        const listaPosts = await resposta.json();
+        listaPosts.forEach(post => {
+            tr = document.createElement('tr');
+            tr.innerHTML = `
+            <td>${post.id}</td>
+            <td>${post.title}</td>
+            <td>
+                <button data-postid="${post.id}" class="btn-ver btn btn-primary">
+                    Ver comentários
+                </button>
+            </td>          
+            `;
+            tbody.append(tr);
+        });
+    })();
+
+    tbody.addEventListener('click', async event => {
+        
+        if (event.target.classList.contains('btn-ver')){
+            ul.innerHTML = '';
+            let idPost = event.target.dataset.postid;
+            const resposta = await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${idPost}`);
+            const listaComentarios = await resposta.json();
+            // console.log(listaComentarios);
+            listaComentarios.forEach(comentario => {
+                const li = document.createElement('li');
+                li.classList.add('list-group-item', 'mb-3');
+                li.innerHTML=`                
+                <i>${comentario.email.toLowerCase()}</i> comentou: <br>
+                <hr>
+                <b>${comentario.name.toUpperCase()}</b><br>
+                ${comentario.body}
+                `;
+                ul.append(li);
+            });
+
+            window.scrollTo(0,ul.offsetTop);
+        }
+    });
 
 
 </script>
