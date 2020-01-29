@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Javascript: Async - Await</h1>
+    <button id="btnCarregar">
+        Carregar Conteudo
+    </button>
+
+    <div id="conteudoCarregado">
+
+        <!-- O Conteudo carregado de outro lugar será exibido aqui -->
+
+    </div>
+    
+</body>
+</html>
+
+<script>
+
+    const btn = document.querySelector('#btnCarregar');
+
+    btn.addEventListener('click', async function(){
+        try {
+            const respostaServidor = await fetch('https://caelum.jhonatanjacinto.dev/teste.php');
+            let textoHtml = await respostaServidor.text();
+            document.querySelector('#conteudoCarregado').innerHTML = textoHtml;
+
+        }
+        catch(erro){
+            alert("Deu pau!!!");
+            console.error(erro);
+        }            
+    });
+</script>

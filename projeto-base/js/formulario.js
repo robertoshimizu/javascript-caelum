@@ -12,6 +12,10 @@
         else {
             // cria um novo cartao
 
+            moduloMural.adicionarCartao(caixatexto.value);
+            caixatexto.value = '';
+            moduloNotificacao.notificar('Cartao criado com sucesso');
+
         }
 
     });

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Javascript: Ajax com XMLHttpRequest</h1>
+    <button id="btnCarregar">
+        Carregar Conteudo
+    </button>
+
+    <div id="conteudoCarregado">
+
+        <!-- O Conteudo carregado de outro lugar será exibido aqui -->
+
+    </div>
+    
+</body>
+</html>
+
+<script>
+
+    const btn = document.querySelector('#btnCarregar');
+
+    // versao para testar e verificar sync vs async
+    // btn.addEventListener('click', function(){
+    //     const ajax = new XMLHttpRequest();
+    //     ajax.open('GET', 'https://caelum.jhonatanjacinto.dev/teste.php',false);
+    //     ajax.send();
+    //     console.log('Dados Recebidos');
+    //     document.querySelector('#conteudoCarregado').innerHTML = ajax.response;
+    // });
+
+    btn.addEventListener('click', function(){
+        const ajax = new XMLHttpRequest();
+        ajax.open('GET', 'https://caelum.jhonatanjacinto.dev/teste.php',true);
+
+        ajax.send();
+
+        ajax.addEventListener('load', function(){
+            console.log('Dados Recebidos');
+            document.querySelector('#conteudoCarregado').innerHTML = ajax.response;
+        });
+
+        ajax.addEventListener('error', function(erro){
+            console.log(erro);
+        })
+        
+    });
+
+
+</script>
