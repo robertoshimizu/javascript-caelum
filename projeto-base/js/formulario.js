@@ -15,6 +15,7 @@
             moduloMural.adicionarCartao(caixatexto.value);
             caixatexto.value = '';
             moduloNotificacao.notificar('Cartao criado com sucesso');
+            moduloSync.sincronizar();
 
         }
 

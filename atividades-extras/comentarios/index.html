@@ -50,32 +50,71 @@
 
     const tbody = document.querySelector('tbody');
     const ul = document.querySelector('.comentarios');
+    const paginador = document.querySelector('#paginador');
+    const quantidade = document.querySelector('#quantidade');
 
-    (async() => {
-        let url = 'https://jsonplaceholder.typicode.com/posts?_start=0&_limit=10';
-        const resposta = await fetch(url);
-        const listaPosts = await resposta.json();
-        listaPosts.forEach(post => {
-            tr = document.createElement('tr');
-            tr.innerHTML = `
-            <td>${post.id}</td>
-            <td>${post.title}</td>
-            <td>
-                <button data-postid="${post.id}" class="btn-ver btn btn-primary">
-                    Ver comentários
-                </button>
-            </td>          
-            `;
-            tbody.append(tr);
-        });
-    })();
+    quantidade.addEventListener('change', () => {
+        let numeroPaginas = Math.ceil(100 / quantidade.value);
+        paginador.innerHTML = '';
+
+        for (let i =1; i <= numeroPaginas; i++){
+            const opcao = document.createElement('option');
+            opcao.value = i;
+            opcao.textContent = i;
+            paginador.append(opcao);
+        }
+        carregarPosts();
+    });
+
+    paginador.addEventListener('change', () => {
+        carregarPosts(paginador.value);
+    });
+
+    carregarPosts();
+    async function carregarPosts(pagina = 1) {
+        try {
+
+            // Limpa a lista de comentarios em uma nova pagina
+            ul.innerHTML = '';
+            tbody.innerHTML = 'Carregando ...';
+            let qtd = quantidade.value;
+            let start = (pagina - 1) * qtd;
+            let url = `https://jsonplaceholder.typicode.com/posts?_start=${start}&_limit=${qtd}`;
+            const resposta = await fetch(url);
+            const listaPosts = await resposta.json();
+            tbody.innerHTML = '';
+            listaPosts.forEach(post => {
+                tr = document.createElement('tr');
+                tr.innerHTML = `
+                <td>${post.id}</td>
+                <td>${post.title}</td>
+                <td>
+                    <button data-postid="${post.id}" class="btn-ver btn btn-primary">
+                        Ver comentários
+                    </button>
+                </td>          
+                `;
+                tbody.append(tr);
+            });
+
+        }
+        catch(erro) {
+            alert('Nao foi possivel carregar os dados selecionados');
+            console.log(erro);
+        }
+    };
 
     tbody.addEventListener('click', async event => {
         
         if (event.target.classList.contains('btn-ver')){
             ul.innerHTML = '';
+            event.target.textContent = "Carregando ...";
+            event.target.disabled = true;
             let idPost = event.target.dataset.postid;
             const resposta = await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${idPost}`);
+            event.target.disabled = false;
+            event.target.textContent = "Ver comentários";
+
             const listaComentarios = await resposta.json();
             // console.log(listaComentarios);
             listaComentarios.forEach(comentario => {
@@ -88,9 +127,10 @@
                 ${comentario.body}
                 `;
                 ul.append(li);
-            });
+            });          
 
-            window.scrollTo(0,ul.offsetTop);
+            // window.scrollTo(0,ul.offsetTop);
+            window.scrollTo({top: ul.offsetTop, behavior: 'smooth'});
         }
     });
 

@@ -91,9 +91,38 @@ const moduloMural = (()=>{
         `;
 
         mural.append(cartao);
-
-
     }
+
+    function getCartoes() {
+      const cartoes = mural.querySelectorAll(`.cartao`);
+      const listaCartoes = Array.from(cartoes).map(cartao => {
+        return{
+          conteudo: cartao.querySelector('.cartao-conteudo').textContent,
+          cor:cartao.style.backgroundColor
+        }
+      })
+      // console.log(listaCartoes);
+
+      return listaCartoes;
+    };
+
+    $.ajax({
+      type:'GET',
+      url:'https://ceep.herokuapp.com/cartoes/carregar',
+      data: { usuario: 'rshimizubr@gmail.com' },
+      dataType: 'jsonp'
+    })
+    .done(dados => {
+      console.log(dados);
+      const listaCartoes = dados.cartoes;
+      listaCartoes.forEach(cartao => {
+        moduloMural.adicionarCartao(cartao.conteudo, cartao.cor);
+      })
+    })
+    .fail(erro => {
+      moduloNotificacao.notificar('Nao foi possivel carregar seus cartoes salvos :(');
+      console.log(erro);
+    });
 
 
 
@@ -102,6 +131,8 @@ const moduloMural = (()=>{
     // quando abaixo eu ponho no return - Como se fosse uma classe publica do Java
     return{
         mudarLayout,
+        adicionarCartao,
+        getCartoes,
         adicionarCartao
     }
     
