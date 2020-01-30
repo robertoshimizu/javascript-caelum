@@ -50,6 +50,38 @@
       <!-- Mural Vazio -->
  
     </section>
+
+    <script id="template-cartao" type='text/template'>
+
+      <div class="opcoesDoCartao">
+        <button class="opcoesDoCartao-remove opcoesDoCartao-opcao" tabindex="0">
+          <svg><use xlink:href="#iconeRemover"></use></svg>
+        </button>
+
+        <input type="radio" name="corDoCartao{{NUMERO_DO_CARTAO}}" value="#EBEF40" id="corPadrão-cartao{{NUMERO_DO_CARTAO}}" class="opcoesDoCartao-radioTipo" checked>
+        <label for="corPadrão-cartao{{NUMERO_DO_CARTAO}}" class="opcoesDoCartao-tipo opcoesDoCartao-opcao" style="color: #EBEF40;" tabindex="0">
+          Padrão
+        </label>
+
+        <input type="radio" name="corDoCartao{{NUMERO_DO_CARTAO}}" value="#F05450" id="corImportante-cartao{{NUMERO_DO_CARTAO}}" class="opcoesDoCartao-radioTipo">
+        <label for="corImportante-cartao{{NUMERO_DO_CARTAO}}" class="opcoesDoCartao-tipo opcoesDoCartao-opcao" style="color: #F05450;" tabindex="0">
+          Importante
+        </label>
+
+        <input type="radio" name="corDoCartao{{NUMERO_DO_CARTAO}}" value="#92C4EC" id="corTarefa-cartao{{NUMERO_DO_CARTAO}}" class="opcoesDoCartao-radioTipo">
+        <label for="corTarefa-cartao{{NUMERO_DO_CARTAO}}" class="opcoesDoCartao-tipo opcoesDoCartao-opcao" style="color: #92C4EC;" tabindex="0">
+          Tarefa
+        </label>
+
+        <input type="radio" name="corDoCartao{{NUMERO_DO_CARTAO}}" value="#76EF40" id="corInspiração-cartao{{NUMERO_DO_CARTAO}}" class="opcoesDoCartao-radioTipo">
+        <label for="corInspiração-cartao{{NUMERO_DO_CARTAO}}" class="opcoesDoCartao-tipo opcoesDoCartao-opcao" style="color: #76EF40;" tabindex="0">
+          Inspiração
+        </label>
+      </div>
+      <p class="cartao-conteudo" contenteditable tabindex="0">{{CONTEUDO_DO_CARTAO}}</p>
+
+    </script>
+
     <script src="js/jquery.js"></script>
     <script src="js/opcoesDaPagina/btnLinhas.js"></script>
     <script src="js/opcoesDaPagina//btnAjuda.js"></script>
